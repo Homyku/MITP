@@ -1,28 +1,25 @@
 #include <stdio.h>
-#define DL_NAZPLIKU 20
-#define TRUE 1
-#define FALSE 0
+#include <stdlib.h>
 
-int main()
-{
-    char nazwapliku [DL_NAZPLIKU+1] ;
-    FILE * we ;
-    char c;
-    int lbwierszy, i;
-    do{
-        printf("podaj nazwe pliku do odczytu:\n");
-        gets (nazwapliku);
-        if ((we = fopen (nazwapliku, "rt")) == NULL)
-            printf("nie ma takiego pliku\n");
+int main(int argc, char *argv[]){
+    if (argc<2){
+        printf("\nusage:zad19 file \n\n");
     }
-    while (we == NULL);
-
-    for (i=0; i<26; i++)
-    lbwierszy = 0;
-    while (c= fgetc(we), ! feof (we)){
-        if (c== '\n') lbwierszy++ ;
-
+    else{
+        FILE *plik=fopen(argv[1],"r");
+        if (plik==NULL){
+            printf("\nNULL\n");
+        }
+        char znak;
+        int count=0;
+        while(feof(plik)==0){
+            fscanf(plik,"%c",&znak);
+            if((int)znak==13){
+                    count++;
+            }
+        }
+        fclose(plik);
+        printf("\nfile: %s contains %d lines. \n\n", argv[1], count);
     }
-    printf("plik zawiera %d wierszy\n", lbwierszy);
+    return 0;
 }
-
